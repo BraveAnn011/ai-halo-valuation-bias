@@ -2,7 +2,7 @@
 ### Same person, same $2.43 necklace, three outfits: a behavioral study of context-driven valuation bias in six multimodal LLMs
 
 **Brianne Lee** · July 2026 · briannelee011@gmail.com
-Companion study to [*Which answer did the 17-year-old write?*](../) (Lee, 2026)
+Companion study to [*Which answer did the 17-year-old write?*](https://github.com/BraveAnn011/llm-author-misattribution) (Lee, 2026)
 
 ---
 
