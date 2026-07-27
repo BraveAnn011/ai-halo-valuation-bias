@@ -1,0 +1,6 @@
+keys.json
+scripts/keys.json
+*.env
+__pycache__/
+*.pyc
+.DS_Store
