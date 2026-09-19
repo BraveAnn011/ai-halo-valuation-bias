@@ -1,6 +1,5 @@
 # AI Halo Valuation Bias Study
-
-Companion study: Companion study: [llm-author-misattribution](https://github.com/BraveAnn011/llm-author-misattribution) (Lee, 2026) — same six-model panel, testing author-age misattribution instead of price valuation.
+Companion study: [*Which answer did the 17-year-old write?*](https://github.com/BraveAnn011/llm-author-misattribution) (Lee, 2026)
 
 ## Methodology & Findings
 This repository contains a six-model Vision-Language Model (VLM) study evaluating context-driven valuation bias. The experiment analyzes how visual and textual contexts inflate or deflate price estimates across frontier models.
