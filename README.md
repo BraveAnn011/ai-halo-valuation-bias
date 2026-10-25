@@ -15,7 +15,12 @@ This repository contains a study of context-driven valuation bias in frontier la
 
 ## Project Structure
 - `scripts/`: `run_halo.py`, the runner used for data collection, and `keys_template.json`.
-- `analysis/`: `analyze_halo.py` computes the point estimates (geometric means, ratios, counts). `python3 analysis/analyze_halo.py data/halo_master_v1.csv` drops duplicate-flagged rows by default and prints how many; add `--keep-dups` to keep them. Bootstrap CIs and tests reported in the paper are not in this script.
+- `analysis/`:
+    - `analyze_halo.py` computes the point estimates (geometric means, ratios, counts). It drops duplicate-flagged rows by default and prints how many; add `--keep-dups` to keep them.
+    - `halo_stats.py` computes the paper's bootstrap CIs, Mann-Whitney tests and Wilson intervals (add `nodup` to drop duplicate-flagged rows).
+    - `extra_stats.py` covers the debiasing ratio of ratios, blind-condition CIs, text-only cells and the cue-probe keyword screen.
+    - `seq_stats.py` covers the sequential-arm paired ratios and Wilcoxon tests.
+    - All bootstrap seeds are fixed, so results reproduce exactly.
 - `data/`: `halo_master_v1.csv` and `quarantine/` documentation.
 - `docs/`: study protocol (`AI_Halo_proto_v4.md`).
 - `stimuli/`: the four photographs `S1.jpg` to `S4.jpg` (formal, party, yard, flat-lay).
@@ -29,6 +34,9 @@ pip install -r requirements.txt
 cp scripts/keys_template.json keys.json   # add your keys; keys.json is git-ignored
 python3 scripts/run_halo.py --dry-run --arm both --repeats 2
 python3 analysis/analyze_halo.py data/halo_master_v1.csv
+python3 analysis/halo_stats.py data/halo_master_v1.csv nodup
+python3 analysis/extra_stats.py
+python3 analysis/seq_stats.py
 ```
 
 ## Note on the "43x" figure

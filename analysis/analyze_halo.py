@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Point estimates (geometric means, ratios, counts, proportions) for the AI Halo
 study from halo_master_v1.csv. Bootstrap CIs, Mann-Whitney tests and Wilson
-intervals reported in the paper are not computed here.
+intervals reported in the paper are in halo_stats.py, extra_stats.py and
+seq_stats.py.
 Usage (from the repo root): python3 analysis/analyze_halo.py data/halo_master_v1.csv [--keep-dups]"""
 import csv, sys, math
 from collections import Counter, defaultdict
