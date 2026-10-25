@@ -6,6 +6,9 @@
 - `analysis/analyze_halo.py` drops duplicate-flagged rows by default (`--keep-dups` keeps them) and reports refusal rates on all sessions and on the filtered rows.
 - Documented the Gemini adapter defect and that quarantine was applied by hand.
 
+### Removed
+- Camera metadata (EXIF, XMP, IPTC) from `stimuli/S1.jpg` to `S4.jpg`, including in earlier commits. Image data and displayed orientation are unchanged.
+
 ### Added
 - `analysis/halo_stats.py`, `analysis/extra_stats.py`, `analysis/seq_stats.py`: the scripts that compute the paper's confidence intervals and tests. Added `numpy`, `scipy` and `statsmodels` to `requirements.txt`.
 
