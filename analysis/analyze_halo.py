@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""Reproduce every number in the AI Halo README from halo_master_v1.csv.
-Usage: python3 analyze_halo.py ../data/halo_master_v1.csv [--keep-dups]"""
+"""Point estimates (geometric means, ratios, counts, proportions) for the AI Halo
+study from halo_master_v1.csv. Bootstrap CIs, Mann-Whitney tests and Wilson
+intervals reported in the paper are not computed here.
+Usage (from the repo root): python3 analysis/analyze_halo.py data/halo_master_v1.csv [--keep-dups]"""
 import csv, sys, math
 from collections import Counter, defaultdict
 
 path = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith('--') else "halo_master_v1.csv"
 rows = list(csv.DictReader(open(path)))
-rows = [r for r in rows if r['model'] != 'gemini']  # quarantined (F10)
+# Gemini was quarantined; the released CSV contains no Gemini rows, so this is a safeguard.
+rows = [r for r in rows if r['model'] != 'gemini']
+all_rows = rows  # before duplicate filtering; used for refusal rates (see F4)
 n_dup = sum(r.get('dup_flag') == '1' for r in rows)
 if '--keep-dups' not in sys.argv:
     rows = [r for r in rows if r.get('dup_flag') != '1']  # drop duplicate-flagged rows
@@ -40,14 +44,21 @@ for m in MODELS:
     if t1 and t3:
         print(f"{m:9s} T1=${gm(t1):6.1f}(n={len(t1)}) T3=${gm(t3):6.1f}(n={len(t3)}) ratio={gm(t1)/gm(t3):4.1f}x")
 
-print("\n== F4: REFUSALS (image estimates) ==")
+# The duplicate key (model, condition, stimulus, turn, response hash) ignores the
+# session, so identical refusal texts in different sessions get flagged. Refusal
+# rates are therefore reported on all sessions and on the duplicate-filtered rows.
+print("\n== F4: REFUSALS (image estimates; all sessions | duplicate-filtered rows) ==")
+def image_estimates(src, m):
+    return [r for r in src if r['model'] == m and r['arm'] == 'fresh'
+            and r['turn_label'] == 'estimate' and r['stimulus'].startswith('S')
+            and r['condition'] != 'open']
 for m in MODELS:
-    ir = [r for r in rows if r['model'] == m and r['arm'] == 'fresh'
-          and r['turn_label'] == 'estimate' and r['stimulus'].startswith('S')
-          and r['condition'] != 'open']
-    if ir:
-        ref = sum(1 for r in ir if r['refusal'] == '1')
-        print(f"{m:9s} {100*ref/len(ir):3.0f}% ({ref}/{len(ir)})")
+    ia, ir = image_estimates(all_rows, m), image_estimates(rows, m)
+    if ia:
+        ra = sum(1 for r in ia if r['refusal'] == '1')
+        rf = sum(1 for r in ir if r['refusal'] == '1')
+        print(f"{m:9s} {100*ra/len(ia):3.0f}% ({ra}/{len(ia)}) | "
+              f"{100*rf/len(ir):3.0f}% ({rf}/{len(ir)})")
 
 print("\n== F5: FLAT-LAY vs RECEIPT ($2.43) vs RETAIL-MID ($24.5) ==")
 for m in MODELS:

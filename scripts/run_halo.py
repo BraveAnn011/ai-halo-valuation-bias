@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-run_halo_v4.py
-==============
+run_halo.py (protocol v4)
+=========================
 Does the outfit price the jewelry?
 Context-driven valuation bias in multimodal LLMs. Protocol: AI_Halo_proto_v4.
 
@@ -31,13 +31,16 @@ Conditions (fresh arm, via --conditions):
   facecrop     S5,S6         blind prompt, skip if missing    (proto F)
   text         T1,T2,T3      text-only descriptions           (proto H)
 
-Usage:
-    pip install requests
-    cp keys_template.json keys.json          # gitignore keys.json
-    python3 run_halo_v4.py --list-models
-    python3 run_halo_v4.py --dry-run --arm both --repeats 2
-    python3 run_halo_v4.py --arm fresh --repeats 30
-    python3 run_halo_v4.py --arm sequential --repeats 8
+Usage (run from the repository root; keys.json and stimuli/ are read from there):
+    pip install -r requirements.txt
+    cp scripts/keys_template.json keys.json  # keys.json is git-ignored
+    python3 scripts/run_halo.py --list-models
+    python3 scripts/run_halo.py --dry-run --arm both --repeats 2
+    python3 scripts/run_halo.py --arm fresh --repeats 30
+    python3 scripts/run_halo.py --arm sequential --repeats 8
+
+As run (July 2026): no temperature is sent, so every provider used its default
+(recorded as "api_default"). The face-crop condition (S5, S6) was not run.
 """
 
 import argparse
@@ -298,6 +301,12 @@ def _call_openai_compatible(messages, model_id, provider, max_tokens=700):
 
 
 def call_google(messages, model_id):
+    # KNOWN DEFECT in this released adapter, kept unchanged for the record.
+    # Messages carry their prompt under "text" and image paths under "images",
+    # but this adapter reads "content", so Gemini would receive neither the
+    # prompt nor the image. It also substitutes "gemini-3.6-flash" for the
+    # registered model id. Everything after the first return is unreachable.
+    # Gemini outputs were quarantined and are not analyzed.
     from google import genai
     import json
     
@@ -800,7 +809,7 @@ def main():
 
         dups = sum(r["dup_flag"] for r in all_rows)
         print(f"\n{arm}: {len(all_rows)} rows -> {csv_path}")
-        print(f"{arm}: {dups} duplicate-flagged rows (excluded at analysis)")
+        print(f"{arm}: {dups} duplicate-flagged rows (dropped by default in analysis/analyze_halo.py)")
 
         priced = [r for r in all_rows if r["necklace_price"] not in ("", None)]
         if priced:

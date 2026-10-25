@@ -8,4 +8,4 @@ Frontal visual context (e.g., formal attire vs. flat-lay controls) systematicall
 ## Experimental Controls & Kill Conditions
 1. **Isolated Baseline ($S_4$):** Flat-lay presentation serves as ground truth context baseline.
 2. **Temperature & Sampling:** Intended: $T=0.0$ where supported. **As run:** no temperature was forced; every request used the provider default (recorded as `api_default` in the `temperature` column).
-3. **Data Integrity & Quarantine:** Any responses containing leaked system tokens, malformed JSON, or API connection cutoffs are automatically flagged and moved to `data/quarantine/`.
+3. **Data Integrity & Quarantine:** Any responses containing leaked system tokens, malformed JSON, or API connection cutoffs are automatically flagged and moved to `data/quarantine/`. **As run:** the runner has no automatic quarantine step. The Gemini outputs were excluded by hand after collection, and API calls that failed after retries were skipped by the runner and not logged. Repeated identical responses are flagged in the `dup_flag` column.
