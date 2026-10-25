@@ -71,7 +71,7 @@ KEYS_FILE = "keys.json"
 TRUE_NECKLACE = 2.43
 TRUE_EARRINGS = 0.71
 # Western retail comparable for a visually similar piece (protocol section 7:
-# dual scoring, pre-registered). Midpoint of the $15-40 band.
+# dual scoring, specified before analysis). Midpoint of the $15-40 band.
 RETAIL_NECKLACE_MID = 24.5
 
 STIMULI = {

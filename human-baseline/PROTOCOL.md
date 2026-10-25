@@ -10,7 +10,7 @@ miscalibrated relative to what a human would say given the same image/context."
 - Same stimulus set as the model trials: same images, same text-only conditions
 - Raters blind to model outputs and to study hypotheses
 - Same price-estimate + confidence-rating response format used for models
-- Scoring: same dual-anchor (receipt/retail) method as analysis/analyze_master.py
+- Scoring: same dual-anchor (receipt/retail) method as analysis/analyze_halo.py
 
 ## Status
 Protocol drafted, not yet run. Results will be added here when complete.

@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Reproduce every number in the AI Halo README from halo_master_v1.csv.
-Usage: python3 analyze_halo.py ../data/halo_master_v1.csv"""
+Usage: python3 analyze_halo.py ../data/halo_master_v1.csv [--keep-dups]"""
 import csv, sys, math
 from collections import Counter, defaultdict
 
-path = sys.argv[1] if len(sys.argv) > 1 else "halo_master_v1.csv"
+path = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith('--') else "halo_master_v1.csv"
 rows = list(csv.DictReader(open(path)))
 rows = [r for r in rows if r['model'] != 'gemini']  # quarantined (F10)
-print(f"analysis rows: {len(rows)}")
+n_dup = sum(r.get('dup_flag') == '1' for r in rows)
+if '--keep-dups' not in sys.argv:
+    rows = [r for r in rows if r.get('dup_flag') != '1']  # drop duplicate-flagged rows
+print(f"analysis rows: {len(rows)} (duplicate-flagged rows {'kept' if '--keep-dups' in sys.argv else 'dropped'}: {n_dup})")
 
 MODELS = ['claude', 'gpt5', 'gpt4o', 'grok', 'kimi', 'deepseek']
 
