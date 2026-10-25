@@ -43,7 +43,7 @@ python3 analysis/seq_stats.py
 The public headline "43x" is Kimi K3's formal-photo geometric mean ($103.9) divided by the receipt price. Most of that is baseline overestimate: Kimi's flat-lay estimate is already 18.7x the receipt. The formal-versus-flat-lay context effect for Kimi is 2.28x.
 
 ## License and Citation
-Code is released under the MIT License (see `LICENSE`).
+Code is released under the MIT License (see `LICENSE`). Data in `data/` are released under CC BY 4.0 (see `LICENSE-DATA`). The stimulus photographs remain the author's copyright and are released for research verification only; location and other identifying metadata have been removed from them.
 
 Lee, B. (2026). Does the Outfit Change the Price? Context Halo in Vision-Language Model Valuation of an Identical Low-Cost Necklace. arXiv preprint (identifier to be added). Code and data: https://github.com/BraveAnn011/ai-halo-valuation-bias
 
