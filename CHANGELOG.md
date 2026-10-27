@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+### Added
+- arXiv identifier (2610.34591), BibTeX entry and companion-study arXiv link in the README citation.
+
 ## v1.1.0 (2026-10-25)
 ### Changed
 - README, protocol, runner and analysis aligned with the paper: rows vs sessions, model coverage, no pre-registration claim, provider default sampling, stimulus consent, note on the "43x" figure.
